@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 // Port the server is running on
@@ -13,14 +14,22 @@ func handleHello(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello from a Go program"))
 }
 
-func handleStartup(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Server running at http://localhost%v/", port)
+func handleTemplate(w http.ResponseWriter, r *http.Request) {
+	html, err := template.ParseFiles("templates/index.tmpl")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Internal Server Error"))
+		return
+	}
+
+	html.Execute(w, "Test")
 }
 
 func main() {
 	// Create the server
 	server := http.NewServeMux()
 	server.HandleFunc("/hello", handleHello)
+	server.HandleFunc("/template", handleTemplate)
 
 	// Set up the public folder
 	fs := http.FileServer(http.Dir("./public"))
@@ -29,8 +38,6 @@ func main() {
 	// Set up the error listening
 	log.Printf("Server starting at http://localhost%v/", port)
 	err := http.ListenAndServe(port, server)
-	server.HandleFunc("/", handleStartup)
-	log.Println("Hello")
 
 	if err == nil {
 		fmt.Printf("Error while starting the server %v", err)

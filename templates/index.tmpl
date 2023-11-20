@@ -23,12 +23,10 @@
 <body>
     <h1><img src="images/logo.png" alt="Frontend Masters Museum" width="300" fetchpriority="high"></h1>
     <main>
-        {{ . }}
         <article>
-            <h2>Life in Ancient Greece</h2>
-            <p>Uncover the world of ancient Greece through the sculptures, tools, and jewelry found in ruins from over
-                2000 years ago that have been unearthed through modern science and technology.</p>
-            <img src="gallery/ancient-greece.png" fetchpriority="high" decoding="sync">
+            <h2>{{ .Title }}</h2>
+            <p>{{ .Description }}</p>
+            <img src="gallery/{{ .Image }}" fetchpriority="high" decoding="sync">
         </article>
     </main>
 </body>

@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"text/template"
+
+	"frontendmasters.com/go/museum/data"
 )
 
 // Port the server is running on
@@ -22,7 +24,7 @@ func handleTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html.Execute(w, "Test")
+	html.Execute(w, data.GetAll()[1])
 }
 
 func main() {

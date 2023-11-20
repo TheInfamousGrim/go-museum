@@ -34,6 +34,7 @@ func main() {
 	server.HandleFunc("/hello", handleHello)
 	server.HandleFunc("/template", handleTemplate)
 	server.HandleFunc("/api/exhibitions", api.GetExhibitions)
+	server.HandleFunc("/api/exhibitions/new", api.Post)
 
 	// Set up the public folder
 	fs := http.FileServer(http.Dir("./public"))

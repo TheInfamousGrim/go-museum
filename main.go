@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"text/template"
 
+	"frontendmasters.com/go/museum/api"
 	"frontendmasters.com/go/museum/data"
 )
 
@@ -32,6 +33,7 @@ func main() {
 	server := http.NewServeMux()
 	server.HandleFunc("/hello", handleHello)
 	server.HandleFunc("/template", handleTemplate)
+	server.HandleFunc("/api/exhibitions", api.GetExhibitions)
 
 	// Set up the public folder
 	fs := http.FileServer(http.Dir("./public"))
